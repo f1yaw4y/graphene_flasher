@@ -47,7 +47,7 @@ logo
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip.sig
         ;;
-        global_dir=""
+        
         2)
             # Pixel 3 XL
             curl -O https://releases.grapheneos.org/crosshatch-factory-$date_picked.zip
