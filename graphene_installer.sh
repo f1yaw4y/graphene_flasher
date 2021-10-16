@@ -21,9 +21,10 @@ echo -e "\033[1;37m---------------------------------------------------------"
 clear
 logo
     echo "Which Pixel are you flashing? "
-    echo "1. Pixel 2        3. Pixel 3       6. Pixel 4" 
-    echo "2. Pixel 2 XL     4. Pixel 3 XL    7. Pixel 4 XL" 
-    echo "                  5. Pixel 3a      8. Pixel 4a" 
+    echo "1. Pixel 3        5. Pixel 4       9. Pixel 5" 
+    echo "2. Pixel 3 XL     6. Pixel 4 XL    10. Pixel 5a" 
+    echo "3. Pixel 3a       7. Pixel 4a                  " 
+    echo "4. Pixel 3a XL    8. Pixel 4a 5G               "
     echo ""
     read -p "Select Model > " pixel_model
     read -p "Select Firmware Version (ex. 2021.06.09.13 > " date_picked
@@ -37,58 +38,68 @@ logo
       echo "Downloading GrapheneOS. . ."
     sleep 2s
     cd $global_dir
+
+
     case $pixel_model in
         
         1)
-            # Pixel 2
-            curl -O https://releases.grapheneos.org/walleye-factory-$date_picked.zip
-            curl -O https://releases.grapheneos.org/walleye-factory-$date_picked.zip.sig
-        ;;
-        global_dir=""
-        2)
-            # Pixel 2 XL
-            curl -O https://releases.grapheneos.org/taimen-factory-$date_picked.zip
-            curl -O https://releases.grapheneos.org/taimen-factory-$date_picked.zip.sig
-        ;;
-
-        3) 
             # Pixel 3
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip.sig
         ;;
-
-        4)
+        global_dir=""
+        2)
             # Pixel 3 XL
             curl -O https://releases.grapheneos.org/crosshatch-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/crosshatch-factory-$date_picked.zip.sig
         ;;
 
-        5)
+        3) 
             # Pixel 3a
             curl -O https://releases.grapheneos.org/sargo-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/sargo-factory-$date_picked.zip.sig
         ;;
 
-        6)
+        4) 
+            #Pixel 3a XL
+            curl -O https://releases.grapheneos.org/bonito-factory-$date_picked.zip
+            curl -O https://releases.grapheneos.org/bonito-factory-$date_picked.zip.sig
+        5)
             # Pixel 4
             curl -O https://releases.grapheneos.org/flame-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/flame-factory-$date_picked.zip.sig
         ;;
 
-        7)
+        6)
             # Pixel 4 XL
             curl -O https://releases.grapheneos.org/coral-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/coral-factory-$date_picked.zip.sig
         ;;
-        
-        8)
+
+        7)
             # Pixel 4a
             curl -O https://releases.grapheneos.org/sunfish-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/sunfish-factory-$date_picked.zip.sig
         ;;
+
+        8)
+            # Pixel 4a 5G
+            curl -O https://releases.grapheneos.org/bramble-factory-$date_picked.zip
+            curl -O https://releases.grapheneos.org/bramble-factory-$date_picked.zip.sig
+        ;;
         
-        
-        
+        9)
+            # Pixel 5
+            curl -O https://releases.grapheneos.org/redfin-factory-$date_picked.zip
+            curl -O https://releases.grapheneos.org/redfin-factory-$date_picked.zip.sig
+        ;;
+
+        10)
+            # Pixel 5a
+            curl -O https://releases.grapheneos.org/barbet-factory-$date_picked.zip
+            curl -O https://releases.grapheneos.org/barbet-factory-$date_picked.zip.sig
+        ;;
+
         
 
     esac
