@@ -27,7 +27,7 @@ logo
     echo "4. Pixel 3a XL    8. Pixel 4a 5G               "
     echo ""
     read -p "Select Model > " pixel_model
-    read -p "Select Firmware Version (ex. 2021.06.09.13 > " date_picked
+    read -p "Select Firmware Version (ex. 2021.06.09.13) > " date_picked
     read -p "Enter Install Directory > " global_dir
     clear
 
