@@ -18,6 +18,40 @@ echo -e "          |       \033[1;31m                    Coded by ~flyaway~     
 echo -e "\033[1;37m---------------------------------------------------------"
 }
 
+function flash_process() {
+    echo "Please boot phone into recovery"
+    echo "**Reboot and then hold volume down until you're in recovery"
+    read -n 1 -s -r -p "Press any key when your phone is connected and in recovery"
+    clear
+    echo "Unlocking Bootloader. . ."
+    fastboot flashing unlock
+
+    echo "Downloading verification key. . ."
+    curl -O https://releases.grapheneos.org/factory.pub
+
+    read -p "Drag .zip firmware package here > " frmware_path
+    signify -Cqp factory.pub -x  $frmware_path && echo verified
+    sleep 3s
+    echo "Make sure it says 'verified'"
+
+    echo "Extracting Image. . ."
+    bsdtar xvf $frmware_path
+    read -p "Drag extracted firmware folder here > " extracted_frmware
+
+    echo "Flashing. . ."
+    cd $extracted_frmware
+    ./flash-all.sh
+    read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
+
+    echo "Complete. Re-Locking Bootloader. . ."
+    fastboot flashing lock
+    sleep 5s
+
+    clear
+    logo
+    echo "Congradulations! Enjoy GrapheneOS"
+}
+
 clear
 logo
     echo "Which Pixel are you flashing? "
@@ -114,37 +148,7 @@ then
     echo "Tools exist"
     sleep 3s
 
-    echo "Please boot phone into recovery"
-    echo "**Reboot and then hold volume down until you're in recovery"
-    read -n 1 -s -r -p "Press any key when your phone is connected and in recovery"
-    clear
-    echo "Unlocking Bootloader. . ."
-    fastboot flashing unlock
-
-    echo "Downloading verification key. . ."
-    curl -O https://releases.grapheneos.org/factory.pub
-
-    read -p "Drag .zip firmware package here > " frmware_path
-    signify -Cqp factory.pub -x  $frmware_path && echo verified
-    sleep 3s
-    echo "Make sure it says 'verified'"
-
-    echo "Extracting Image. . ."
-    bsdtar xvf $frmware_path
-    read -p "Drag extracted firmware folder here > " extracted_frmware
-
-    echo "Flashing. . ."
-    cd $extracted_frmware
-    ./flash-all.sh
-    read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
-
-    echo "Complete. Re-Locking Bootloader. . ."
-    fastboot flashing lock
-    sleep 5s
-
-    clear
-    logo
-    echo "Congradulations! Enjoy GrapheneOS"
+    flash_process
 else
     echo "Tools don't exist"
     sleep 2s
@@ -164,33 +168,7 @@ else
 
     echo "Script can continue"
     sleep 2s
-    read -n 1 -s -r -p "Press any key when your phone is connected"
-    clear
-    echo "Unlocking Bootloader. . ."
-    fastboot flashing unlock
-
-    echo "Downloading verification key. . ."
-    curl -O https://releases.grapheneos.org/factory.pub
-
-    read -p "Drag Firmware here > " frmware_path
-    signify -Cqp factory.pub -x  $frmware_path && echo verified
-    sleep 3s
-    echo "Make sure it says 'verified'"
-
-    echo "Extracting Image. . ."
-    bsdtar xvf $frmware_path
-    read -p "Drag extracted firmware folder here > " extracted_frmware
-
-    echo "Flashing. . ."
-    cd $extracted_frmware
-    ./flash-all.sh
-    read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
-    echo "Complete. Re-Locking Bootloader. . ."
-    fastboot flashing lock
-     sleep 5s
-    clear
-    logo
-    echo "Congradulations! Enjoy GrapheneOS"
+    flash_process
 fi
 
 echo "Script complete! For issues or to attempt manual CLI install,"
