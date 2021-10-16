@@ -60,8 +60,8 @@ logo
     echo "|Pixel 3 XL (crosshatch)   | Pixel 4 XL (coral)      | 10.Pixel 5a (barbet)" 
     echo "|Pixel 3a (sargo)          | Pixel 4a (sunfish)                  " 
     echo "|Pixel 3a XL (bonito)      | Pixel 4a 5G (bramble)               "
-    echo "                                                     |Unlock Bootloader: 'unlock'"
-    echo "                                                     |Lock Bootloader: 'lock'"
+    echo "                                                     |Manual Unlock Bootloader: 'unlock'"
+    echo "                                                     |Manual Lock Bootloader: 'lock'"
     echo ""
 }
 
