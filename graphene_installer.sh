@@ -52,7 +52,8 @@ function flash_process() {
     echo "Congradulations! Enjoy GrapheneOS"
 }
 
-clear
+function menu() {
+    clear
 logo
     echo "Which Pixel are you flashing? "
     echo "|Pixel 3 (blueline)        | Pixel 4 (flame)         | 9. Pixel 5 (redfin)" 
@@ -62,13 +63,16 @@ logo
     echo "|Unlock Bootloader: 'unlock'"
     echo "|Lock Bootloader: 'lock'"
     echo ""
-    read -p "Codename or option > " pixel_model
+}
+
+function options() {
+     read -p "Codename or option > " pixel_model
     case $pixel_model in
 
     unlock)
-        fastboot flashing unlock ;;
+        fastboot flashing unlock; menu; options ;;
     lock)
-        fastboot flashing lock ;;
+        fastboot flashing lock; menu; options ;;
     esac
     read -p "Select Firmware Version (ex. 2021.06.09.13) > " date_picked
     read -p "Enter Install Directory > " global_dir
@@ -113,6 +117,11 @@ else
     sleep 2s
     flash_process
 fi
+}
+
+menu
+options
+
 
 echo "Script complete! For issues or to attempt manual CLI install,"
 echo "visit https://grapheneos.org/install/cli"
