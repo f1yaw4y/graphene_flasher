@@ -4,6 +4,8 @@
 
 Simple script for installing GrapheneOS on Pixel phones. 
 
-Takes care of platform-tools
-Download/unzip/verify
-Re-locks bootloader
+-Takes care of platform-tools
+
+-Download/unzip/verify
+
+-Re-locks bootloader
