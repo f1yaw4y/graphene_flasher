@@ -137,6 +137,10 @@ then
     read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
     echo "Complete. Re-Locking Bootloader. . ."
     fastboot flashing lock
+    sleep 5s
+    clear
+    logo
+    echo "Congradulations! Enjoy GrapheneOS"
 else
     echo "Tools don't exist"
     sleep 2s
@@ -177,6 +181,10 @@ else
     read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
     echo "Complete. Re-Locking Bootloader. . ."
     fastboot flashing lock
+    sleep 5s
+    clear
+    logo
+    echo "Congradulations! Enjoy GrapheneOS"
 fi
 
 echo "Script complete! For issues or to attempt manual CLI install,"
