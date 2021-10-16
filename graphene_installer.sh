@@ -64,6 +64,7 @@ logo
             #Pixel 3a XL
             curl -O https://releases.grapheneos.org/bonito-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/bonito-factory-$date_picked.zip.sig
+        ;;
         5)
             # Pixel 4
             curl -O https://releases.grapheneos.org/flame-factory-$date_picked.zip
