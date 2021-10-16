@@ -7,11 +7,11 @@ echo "          O             "
 echo "   \    /   \   /      "
 echo "    \  /     \ /       "
 echo "      O       O         "
-echo -e " \033[0;34m     |       |    \033[0;32mGrapheneOS     "
-echo -e "  \033[0;34m    |       |        \033[0;32mBash Installer    "
+echo -e " \033[0;34m     |       |    \033[0;32mGrapheneOS Security    "
+echo -e "  \033[0;34m    |       |          "
 echo -e "  \033[0;34m    O       O         "
-echo "     /  \    / \       "
-echo "    /    \  /   \      "
+echo -e "     /  \    / \         \033[0;32mFree your Pixel >>    "
+echo -e " \033[0;34m   /    \  /   \      "
 echo "          O             "
 echo "          |             "
 echo -e "          |       \033[1;31m                    Coded by ~flyaway~      "
@@ -47,7 +47,7 @@ logo
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip
             curl -O https://releases.grapheneos.org/blueline-factory-$date_picked.zip.sig
         ;;
-        
+       
         2)
             # Pixel 3 XL
             curl -O https://releases.grapheneos.org/crosshatch-factory-$date_picked.zip
@@ -126,6 +126,8 @@ then
 
     read -p "Drag .zip firmware package here > " frmware_path
     signify -Cqp factory.pub -x  $frmware_path && echo verified
+    sleep 3s
+    echo "Make sure it says 'verified'"
 
     echo "Extracting Image. . ."
     bsdtar xvf $frmware_path
@@ -135,9 +137,11 @@ then
     cd $extracted_frmware
     ./flash-all.sh
     read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
+
     echo "Complete. Re-Locking Bootloader. . ."
     fastboot flashing lock
     sleep 5s
+
     clear
     logo
     echo "Congradulations! Enjoy GrapheneOS"
@@ -170,6 +174,8 @@ else
 
     read -p "Drag Firmware here > " frmware_path
     signify -Cqp factory.pub -x  $frmware_path && echo verified
+    sleep 3s
+    echo "Make sure it says 'verified'"
 
     echo "Extracting Image. . ."
     bsdtar xvf $frmware_path
@@ -181,7 +187,7 @@ else
     read -n 1 -s -r -p "Press any key when your phone is back in recovery/bootloader"
     echo "Complete. Re-Locking Bootloader. . ."
     fastboot flashing lock
-    sleep 5s
+     sleep 5s
     clear
     logo
     echo "Congradulations! Enjoy GrapheneOS"
