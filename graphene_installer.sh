@@ -85,7 +85,7 @@ function options() {
       echo "Downloading GrapheneOS. . ."
     sleep 2s
 
-    curl -O https://releases.grapheneos.org/$mpixel_model-factory-$date_picked.zip
+    curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip
     curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip.sig
 
     echo "Checking for platform-tools. . ."
