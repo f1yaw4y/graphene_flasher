@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function logo() {
+function logo_g() {
 echo -e "\033[0;34m          |             "
 echo "          |             "
 echo "          O             "
@@ -19,6 +19,7 @@ echo -e "\033[1;37m---------------------------------------------------------"
 }
 
 function flash_process() {
+    clear
     echo "Please boot phone into recovery"
     echo "**Reboot and then hold volume down until you're in recovery"
     read -n 1 -s -r -p "Press any key when your phone is connected and in recovery"
@@ -29,14 +30,16 @@ function flash_process() {
     echo "Downloading verification key. . ."
     curl -O https://releases.grapheneos.org/factory.pub
 
-    read -p "Drag .zip firmware package here > " frmware_path
-    signify -Cqp factory.pub -x  $frmware_path && echo verified
+    #read -p "Drag .zip firmware package here > " frmware_path
+    #signify -Cqp factory.pub -x  $frmware_path && echo verified
+    signify -Cqp factory.pub -x $firmware_os
     sleep 3s
     echo "Make sure it says 'verified'"
 
     echo "Extracting Image. . ."
-    bsdtar xvf $frmware_path
-    read -p "Drag extracted firmware folder here > " extracted_frmware
+    #bsdtar xvf $frmware_path
+    bsdtar xvf $firmware_os
+    read -p "Drag extracted firmware folder here (or enter without quotes) > " extracted_frmware
 
     echo "Flashing. . ."
     cd $extracted_frmware
@@ -49,31 +52,36 @@ function flash_process() {
 
     clear
     logo
-    echo "Congradulations! Enjoy GrapheneOS"
+    echo "Congradulations! You are free to reboot and setup your new device. Enjoy GrapheneOS"
 }
 
-function menu() {
+function menu_g() {
     clear
-logo
-    echo "Which Pixel are you flashing? "
-    echo "|Pixel 3 (blueline)        | Pixel 4 (flame)         | 9. Pixel 5 (redfin)" 
-    echo "|Pixel 3 XL (crosshatch)   | Pixel 4 XL (coral)      | 10.Pixel 5a (barbet)" 
-    echo "|Pixel 3a (sargo)          | Pixel 4a (sunfish)                  " 
-    echo "|Pixel 3a XL (bonito)      | Pixel 4a 5G (bramble)               "
-    echo "                                                     |Manual Unlock Bootloader: 'unlock'"
-    echo "                                                     |Manual Lock Bootloader: 'lock'"
-    echo ""
+logo_g
+    echo "Which Pixel are you flashing? (**=obsolete/no longer supported)"
+    echo "|Pixel 3 (blueline)**      |Pixel 4 (flame)        |Pixel 5 (redfin)" 
+    echo "|Pixel 3 XL (crosshatch)** |Pixel 4 XL (coral)     |Pixel 5a (barbet)" 
+    echo "|Pixel 3a (sargo)**        |Pixel 4a (sunfish)     |Pixel 6 (oriole)" 
+    echo "|Pixel 3a XL (bonito)**    |Pixel 4a 5G (bramble)  |Pixel 6a (bluejay"
+    echo "|Pixel 7 (Panther)                                 |Pixel 6 Pro (raven)"
+    echo "|Pixel 7 Pro (cheetah)"
+    echo "                           |Manual Unlock Bootloader: 'unlock'"
+    echo "|Main Menu (m)             |Manual Lock Bootloader: 'lock'"
+    
 }
 
 function options() {
-     read -p "Codename or option > " pixel_model
+    read -p "Codename or option > " pixel_model
     case $pixel_model in
 
     unlock)
-        fastboot flashing unlock; menu; options ;;
+        fastboot flashing unlock; menu_g; options ;;
     lock)
-        fastboot flashing lock; menu; options ;;
+        fastboot flashing lock; menu_g; options ;;
+    m) main_menu2
     esac
+
+
     read -p "Select Firmware Version (ex. 2021.06.09.13) > " date_picked
     read -p "Enter Install Directory > " global_dir
     clear
@@ -85,19 +93,21 @@ function options() {
       echo "Downloading GrapheneOS. . ."
     sleep 2s
 
-    curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip
-    curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip.sig
+    sudo curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip
+    firmware_os="https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip"
+    sudo curl -O https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip.sig
+    firmware_sig="https://releases.grapheneos.org/$pixel_model-factory-$date_picked.zip.sig"
 
     echo "Checking for platform-tools. . ."
 
     if [ -d "$global_dir/platform-tools" ]
 then
-    echo "Tools exist"
+    echo "Platform Tools Exist"
     sleep 3s
 
     flash_process
 else
-    echo "Tools don't exist"
+    echo "Platform Tools don't exist"
     sleep 2s
     echo "Installing . . ."
     cd $global_dir
@@ -108,6 +118,9 @@ else
 
     echo "Adding to PATH. . ."
     export PATH="$PWD/platform-tools:$PATH"
+    sleep 1s
+    echo "Flashing as non-root"
+    sudo apt install android-sdk-platform-tools-common
 
     echo "Installing signify. . ."
     sudo apt install signify-openbsd
@@ -119,8 +132,10 @@ else
 fi
 }
 
-menu
-options
+function graphene_installer() {
+    logo_g
+    menu_g
+    options
 
 
 echo "Script complete! For issues or to attempt manual CLI install,"
