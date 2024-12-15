@@ -30,11 +30,15 @@ function flash_process() {
     echo "Downloading verification key. . ."
     curl -O https://releases.grapheneos.org/factory.pub
 
-    #read -p "Drag .zip firmware package here > " frmware_path
-    #signify -Cqp factory.pub -x  $frmware_path && echo verified
+    #
+    read -p "Drag .zip firmware package here > " frmware_path
+    signify -Cqp factory.pub -x  $frmware_path && echo verified
+    #
     signify -Cqp factory.pub -x $firmware_os
     sleep 3s
+    echo.
     echo "Make sure it says 'verified'"
+    sleep 10s
 
     echo "Extracting Image. . ."
     #bsdtar xvf $frmware_path
@@ -86,7 +90,7 @@ function options() {
     read -p "Enter Install Directory > " global_dir
     clear
 
-    echo -e "\033[0;31m'Please ensure that 'OEM unlocking' and 'USB Debugging' are enabled"
+    echo -e "\033[0;31m'Please ensure that 'OEM unlocking' and 'USB Debugging' are enabled in Developer settings on your phone"
     sleep 5s
 
 
